@@ -3,7 +3,8 @@ namespace Notion;
 class Notion {
     private $apiKey = null; // holds the API key
     var $current_database = null; // stores the ID of database if set
-    const api = "https://api.notion.com/v1/";
+    const NOTION_API = "https://api.notion.com/v1/";
+    const NOTION_VER = "2021-05-13";
 
     function __construct($apiKey = null, $database = null) {
         // a token is required
@@ -26,7 +27,7 @@ class Notion {
         $options = [ 
             'http' => [
                 "method" => "GET",
-                "header" => "Authorization: Bearer ".$this->apiKey."\r\n"."Notion-Version: 2021-05-13\r\n"
+                "header" => "Authorization: Bearer ".$this->apiKey."\r\n"."Notion-Version: $this->NOTION_VER\r\n"
         ]];
         $context=stream_context_create($options);
         $data=file_get_contents('http://www.someservice.com/api/fetch?key=1234567890',false,$context);
