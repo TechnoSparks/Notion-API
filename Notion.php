@@ -23,20 +23,13 @@ class Notion {
         if(empty($id) && empty($this->current_database)) { throw new \Exception('database id needed'); }
     }
 
-    function http_c($endpoint = null, $method = "GET", $payload = null) {
+    function http_c($endpoint = null, $method = "get", $payload = null) {
+        $method = strtolower($method);
         $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
         $curl = curl_init();
-        switch($method){
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if($payload)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if($payload)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
-                break;
+        if($method == "post"){
+            curl_setopt($curl, CURLOPT_POST, 1);
+            if($payload) curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
         }
         // curl options
         curl_setopt($curl, CURLOPT_URL, $url);
