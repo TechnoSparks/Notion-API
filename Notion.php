@@ -23,9 +23,9 @@ class Notion {
         if(empty($id) && empty($this->current_database)) { throw new \Exception('database id needed'); }
     }
 
-    function http_c($endpoint = null, $method = "get", $payload = null, $auto_encode = true) {
+    function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
         $method = strtolower($method);
-        if(!empty($payload) && $auto_encode) $payload = json_encode($payload); 
+        if(!empty($payload) && $convertJSON) $payload = json_encode($payload); 
         $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
         $curl = curl_init();
         if($method == "post"){
@@ -45,6 +45,7 @@ class Notion {
         $result = curl_exec($curl);
         if(!$result){ throw new \Exception('Connection error'); }
         curl_close($curl);
+        if($convertJSON) $result = json_decode($result);
         return $result;
     }
 }
