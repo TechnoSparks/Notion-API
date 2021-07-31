@@ -23,8 +23,9 @@ class Notion {
         if(empty($id) && empty($this->current_database)) { throw new \Exception('database id needed'); }
     }
 
-    function http_c($endpoint = null, $method = "get", $payload = null) {
+    function http_c($endpoint = null, $method = "get", $payload = null, $auto_encode = true) {
         $method = strtolower($method);
+        if(!empty($payload) && $auto_encode) $payload = json_encode($payload); 
         $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
         $curl = curl_init();
         if($method == "post"){
