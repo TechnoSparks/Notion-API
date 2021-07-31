@@ -5,11 +5,11 @@ class Notion {
     var $current_database = null; // stores the ID of database if set
     const api = "https://api.notion.com/v1/";
 
-    function __construct($apiKey = null, $current_database = null) {
+    function __construct($apiKey = null, $database = null) {
         // a token is required
-        if(empty($apiKey)) { throw new Exception('A token is required'); return; }
+        if(empty($apiKey)) { throw new Exception('A token is required'); }
         $this->token = $apiKey;
-        $this->database = $database;
+        $this->current_database = $database;
     }
 
     function get_databases() {
@@ -19,14 +19,14 @@ class Notion {
     function get_rows($id = null) {
         $endpoint = "databases";
         // current_database must be set
-        if(empty($id) && empty($current_database)) { throw new Exception('database id needed'); return; }
+        if(empty($id) && empty($this->current_database)) { throw new Exception('database id needed'); }
     }
 
     function http_request() {
         $options = [ 
             'http' => [
                 "method" => "GET",
-                "header" => "Authorization: Bearer ".$apiKey."\r\n"."Notion-Version: 2021-05-13\r\n"
+                "header" => "Authorization: Bearer ".$this->apiKey."\r\n"."Notion-Version: 2021-05-13\r\n"
         ]];
         $context=stream_context_create($options);
         $data=file_get_contents('http://www.someservice.com/api/fetch?key=1234567890',false,$context);
