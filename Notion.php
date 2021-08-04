@@ -17,10 +17,11 @@ class Notion {
         $endpoint = "databases";
     }
 
-    function get_rows($id = null) {
-        $endpoint = "databases";
+    function get_rows($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = null) {
         // current_database must be set
         if(empty($id) && empty($this->current_database)) { throw new \Exception('database id needed'); }
+        $id = (empty($id)) ? $this->current_database : $id;
+        $endpoint = "databases/$id/query";
     }
 
     function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
