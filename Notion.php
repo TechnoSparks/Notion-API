@@ -42,7 +42,7 @@ class Notion {
         return $this->http_c($endpoint, "post", $payload);
     }
 
-    function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
+    private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
         // # CONSTRAINTS ====================
 
         // sanisation for HTTP method
