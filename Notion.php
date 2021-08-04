@@ -49,7 +49,7 @@ class Notion {
 
         // # LOGIC 
         if(!empty($payload) && $convertJSON) $payload = json_encode($payload); 
-        $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
+        $url = $this->NOTION_API.$endpoint;
         $curl = curl_init();
         if($method == "post"){
             curl_setopt($curl, CURLOPT_POST, 1);
