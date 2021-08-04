@@ -8,7 +8,7 @@ class Notion {
 
     function __construct($apiKey = null, $database = null) {
         // a token is required
-        if(empty($apiKey)) { throw new \Exception('A token is required'); }
+        if(empty($apiKey)) throw new \Exception('A token is required');
         $this->token = $apiKey;
         $this->current_database = $database;
     }
@@ -17,11 +17,25 @@ class Notion {
         $endpoint = "databases";
     }
 
-    function get_rows($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = null) {
+    function get_rows($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = 100) {
+        /* CONSTRAINTS */
         // current_database must be set
-        if(empty($id) && empty($this->current_database)) { throw new \Exception('database id needed'); }
+        if(empty($id) && empty($this->current_database)) throw new \Exception('database id needed');
         $id = (empty($id)) ? $this->current_database : $id;
         $endpoint = "databases/$id/query";
+        // some parameters must be an array
+        if(!empty($filter) && !is_array($filter)) throw new \Exception('get_rows: argument for `filter` must be an array');
+        if(!empty($sorts)  && !is_array($sorts))  throw new \Exception('get_rows: argument for `sorts` must be an array');
+
+        /* LOGIC */
+        // construct payload array
+        $payload = [];
+        if(!empty($filter))       $payload[] = $filter;
+        if(!empty($sorts))        $payload[] = $sorts;
+        if(!empty($start_cursor)) $payload[] = $start_cursor;
+        if(!empty($num_rows))     $payload[] = $num_rows;
+        // commit
+        return $this->http_c($endpoint, "post", $payload);
     }
 
     function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
