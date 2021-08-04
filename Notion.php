@@ -18,7 +18,7 @@ class Notion {
     }
 
     function get_rows($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = 100) {
-        /* CONSTRAINTS */
+        // # CONSTRAINTS 
         // current_database must be set
         if(empty($id) && empty($this->current_database)) throw new \Exception('database id needed');
         $id       = (empty($id)) ? $this->current_database : $id;
@@ -27,7 +27,7 @@ class Notion {
         if(!empty($filter) && !is_array($filter)) throw new \Exception('get_rows: argument for `filter` must be an array');
         if(!empty($sorts)  && !is_array($sorts))  throw new \Exception('get_rows: argument for `sorts` must be an array');
 
-        /* LOGIC */
+        // # LOGIC 
         // construct payload array
         $payload = [];
         if(!empty($filter))       $payload[] = $filter;
@@ -39,7 +39,7 @@ class Notion {
     }
 
     function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
-        /* CONSTRAINTS */
+        // # CONSTRAINTS 
         // sanisation for HTTP method
         $method = strtolower($method);
         // endpoint is required
@@ -47,7 +47,7 @@ class Notion {
         // some parameters must be an array
         if(!empty($payload)  && !is_array($payload)) throw new \Exception('http_c: argument for `payload` must be an array');
 
-        /* LOGIC */
+        // # LOGIC 
         if(!empty($payload) && $convertJSON) $payload = json_encode($payload); 
         $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
         $curl = curl_init();
