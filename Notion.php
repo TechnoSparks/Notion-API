@@ -21,7 +21,7 @@ class Notion {
         /* CONSTRAINTS */
         // current_database must be set
         if(empty($id) && empty($this->current_database)) throw new \Exception('database id needed');
-        $id = (empty($id)) ? $this->current_database : $id;
+        $id       = (empty($id)) ? $this->current_database : $id;
         $endpoint = "databases/$id/query";
         // some parameters must be an array
         if(!empty($filter) && !is_array($filter)) throw new \Exception('get_rows: argument for `filter` must be an array');
@@ -39,7 +39,15 @@ class Notion {
     }
 
     function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
+        /* CONSTRAINTS */
+        // sanisation for HTTP method
         $method = strtolower($method);
+        // endpoint is required
+        if(empty($endpoint))                         throw new \Exception('http_c: an endpoint is required');
+        // some parameters must be an array
+        if(!empty($payload)  && !is_array($payload)) throw new \Exception('http_c: argument for `payload` must be an array');
+
+        /* LOGIC */
         if(!empty($payload) && $convertJSON) $payload = json_encode($payload); 
         $url = $this->NOTION_API.$endpoint; // FINALISE LATER PLS
         $curl = curl_init();
