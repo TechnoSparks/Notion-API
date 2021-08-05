@@ -42,6 +42,10 @@ class Notion {
         return $this->http_c($endpoint, "post", $payload);
     }
 
+    function get_page($toHTML = false) {
+        // TBI
+    }
+
     private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
         // # CONSTRAINTS ====================
 
