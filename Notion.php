@@ -44,6 +44,9 @@ class Notion {
 
     function get_page($toHTML = false) {
         // TBI
+        // # CONSTRAINTS ====================
+
+        // # LOGIC ====================
     }
 
     private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
