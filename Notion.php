@@ -22,6 +22,15 @@ class Notion {
             else $this->throwE('get_databases: argument for `num_databases` must be an int');
         $num_databases = ($num_databases <= 0 && $num_databases > 100) ? 100 : $num_databases; // <= will turn it to default 100
 
+        // # LOGIC ====================
+
+        // construct payload array
+        $payload = [];
+        if(!empty($start_cursor))  $payload[] = $start_cursor;
+        if(!empty($num_databases)) $payload[] = $num_databases;
+
+        // commit
+        return $this->http_c($endpoint, "get", $payload);
     }
 
     function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_pages = 100) {
