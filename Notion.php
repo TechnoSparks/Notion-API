@@ -30,10 +30,8 @@ class Notion {
         if(!empty($sorts)  && !is_array($sorts))  $this->throwE('get_pages: argument for `sorts` must be an array');
 
         // num_pages must be int
-        if(is_numeric($num_pages)) {
-            $num_pages = intval($num_pages); // de-string
-        }
-        else $this->throwE('get_pages: argument for `num_pages` must be an int');
+        if(is_numeric($num_pages)) $num_pages = intval($num_pages); // de-string
+            else $this->throwE('get_pages: argument for `num_pages` must be an int');
         $num_pages = ($num_pages <= 0) ? 100 : $num_pages; // <= will turn it to default 100
 
         // # LOGIC ====================
