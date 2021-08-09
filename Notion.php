@@ -63,7 +63,7 @@ class Notion {
         return $this->http_c($endpoint, "post", $payload);
     }
 
-    function get_page_blocks($toHTML = false) {
+    function get_block_children($toHTML = false) {
         // TBI
         // # CONSTRAINTS ====================
 
