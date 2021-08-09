@@ -1,15 +1,15 @@
 <?php
 namespace Notion;
 class Notion {
-    private $apiKey = null; // holds the API key
+    private $api_key = null; // holds the API key
     var $current_database = null; // stores the ID of database if set
     const NOTION_API = "https://api.notion.com/v1/";
     const NOTION_VER = "2021-05-13";
 
-    function __construct($apiKey = null, $database = null) {
+    function __construct($api_key = null, $database = null) {
         // a token is required
-        if(empty($apiKey)) throw new \Exception('A token is required');
-        $this->token            = $apiKey;
+        if(empty($api_key)) throw new \Exception('A token is required');
+        $this->token            = $api_key;
         $this->current_database = $database;
     }
 
@@ -74,7 +74,7 @@ class Notion {
         // curl options
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer ".$this->apiKey,
+            "Authorization: Bearer ".$this->api_key,
             "Notion-Version: ".$this->NOTION_VER,
             'Content-Type: application/json'
         ]);
