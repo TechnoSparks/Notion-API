@@ -17,7 +17,7 @@ class Notion {
         $endpoint = "databases";
     }
 
-    function get_rows($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = 100) {
+    function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = 100) {
         // # CONSTRAINTS ====================
 
         // current_database must be set
@@ -42,7 +42,7 @@ class Notion {
         return $this->http_c($endpoint, "post", $payload);
     }
 
-    function get_page($toHTML = false) {
+    function get_page_blocks($toHTML = false) {
         // TBI
         // # CONSTRAINTS ====================
 
