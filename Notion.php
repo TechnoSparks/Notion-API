@@ -13,27 +13,27 @@ class Notion {
         $this->current_database = $database;
     }
 
-    function get_databases($start_cursor = null, $num_databases = 100) {
+    function get_databases($start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
         $endpoint = "databases";
 
-        // num_databases must be int
-        if(is_numeric($num_databases)) $num_databases = intval($num_databases); // de-string
-            else $this->throwE('get_databases: argument for `num_databases` must be an int');
-        $num_databases = ($num_databases <= 0 && $num_databases > 100) ? 100 : $num_databases; // <= will turn it to default 100
+        // num_items must be int
+        if(is_numeric($num_items)) $num_items = intval($num_items); // de-string
+            else $this->throwE('get_databases: argument for `num_items` must be an int');
+        $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
 
         // construct payload array
         $payload = [];
-        if(!empty($start_cursor))  $payload[] = $start_cursor;
-        if(!empty($num_databases)) $payload[] = $num_databases;
+        if(!empty($start_cursor)) $payload[] = $start_cursor;
+        if(!empty($num_items))    $payload[] = $num_items;
 
         // commit
         return $this->http_c($endpoint, "get", $payload);
     }
 
-    function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_pages = 100) {
+    function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
 
         // current_database must be set
@@ -45,10 +45,10 @@ class Notion {
         if(!empty($filter) && !is_array($filter)) $this->throwE('get_pages: argument for `filter` must be an array');
         if(!empty($sorts)  && !is_array($sorts))  $this->throwE('get_pages: argument for `sorts` must be an array');
 
-        // num_pages must be int
-        if(is_numeric($num_pages)) $num_pages = intval($num_pages); // de-string
-            else $this->throwE('get_pages: argument for `num_pages` must be an int');
-        $num_pages = ($num_pages <= 0 && $num_pages > 100) ? 100 : $num_pages; // <= will turn it to default 100
+        // num_items must be int
+        if(is_numeric($num_items)) $num_items = intval($num_items); // de-string
+            else $this->throwE('get_pages: argument for `num_items` must be an int');
+        $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
 
@@ -57,7 +57,7 @@ class Notion {
         if(!empty($filter))       $payload[] = $filter;
         if(!empty($sorts))        $payload[] = $sorts;
         if(!empty($start_cursor)) $payload[] = $start_cursor;
-        if(!empty($num_pages))    $payload[] = $num_pages;
+        if(!empty($num_items))    $payload[] = $num_items;
 
         // commit
         return $this->http_c($endpoint, "post", $payload);
