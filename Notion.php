@@ -13,8 +13,15 @@ class Notion {
         $this->current_database = $database;
     }
 
-    function get_databases() {
+    function get_databases($start_cursor = null, $num_databases = 100) {
+        // # CONSTRAINTS ====================
         $endpoint = "databases";
+
+        // num_databases must be int
+        if(is_numeric($num_databases)) $num_databases = intval($num_databases); // de-string
+            else $this->throwE('get_databases: argument for `num_databases` must be an int');
+        $num_databases = ($num_databases <= 0 && $num_databases > 100) ? 100 : $num_databases; // <= will turn it to default 100
+
     }
 
     function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_pages = 100) {
