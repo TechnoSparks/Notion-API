@@ -8,7 +8,7 @@ class Notion {
 
     function __construct($api_key = null, $database = null) {
         // a token is required
-        if(empty($api_key)) throw new \Exception('A token is required');
+        if(empty($api_key)) $this->throwE('A token is required');
         $this->token            = $api_key;
         $this->current_database = $database;
     }
@@ -21,19 +21,19 @@ class Notion {
         // # CONSTRAINTS ====================
 
         // current_database must be set
-        if(empty($id) && empty($this->current_database)) throw new \Exception('database id needed');
+        if(empty($id) && empty($this->current_database)) $this->throwE('database id needed');
         $id       = (empty($id)) ? $this->current_database : $id;
         $endpoint = "databases/$id/query";
 
         // some parameters must be an array
-        if(!empty($filter) && !is_array($filter)) throw new \Exception('get_pages: argument for `filter` must be an array');
-        if(!empty($sorts)  && !is_array($sorts))  throw new \Exception('get_pages: argument for `sorts` must be an array');
+        if(!empty($filter) && !is_array($filter)) $this->throwE('get_pages: argument for `filter` must be an array');
+        if(!empty($sorts)  && !is_array($sorts))  $this->throwE('get_pages: argument for `sorts` must be an array');
 
         // num_pages must be int
         if(is_numeric($num_pages)) {
             $num_pages = intval($num_pages); // de-string
         }
-        else throw new \Exception('get_pages: argument for `num_pages` must be an int');
+        else $this->throwE('get_pages: argument for `num_pages` must be an int');
 
         // # LOGIC ====================
 
@@ -62,10 +62,10 @@ class Notion {
         $method = strtolower($method);
 
         // endpoint is required
-        if(empty($endpoint))                         throw new \Exception('http_c: an endpoint is required');
+        if(empty($endpoint))                         $this->throwE('http_c: an endpoint is required');
 
         // some parameters must be an array
-        if(!empty($payload)  && !is_array($payload)) throw new \Exception('http_c: argument for `payload` must be an array');
+        if(!empty($payload)  && !is_array($payload)) $this->throwE('http_c: argument for `payload` must be an array');
 
         // # LOGIC ====================
 
@@ -89,7 +89,7 @@ class Notion {
 
         // execute curl session
         $result = curl_exec($curl);
-        if(!$result){ throw new \Exception('Connection error'); }
+        if(!$result){ $this->throwE('Connection error'); }
         curl_close($curl);
         if($convertJSON) $result = json_decode($result);
         return $result;
