@@ -17,7 +17,7 @@ class Notion {
         $endpoint = "databases";
     }
 
-    function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_rows = 100) {
+    function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_pages = 100) {
         // # CONSTRAINTS ====================
 
         // current_database must be set
@@ -36,7 +36,7 @@ class Notion {
         if(!empty($filter))       $payload[] = $filter;
         if(!empty($sorts))        $payload[] = $sorts;
         if(!empty($start_cursor)) $payload[] = $start_cursor;
-        if(!empty($num_rows))     $payload[] = $num_rows;
+        if(!empty($num_pages))    $payload[] = $num_pages;
 
         // commit
         return $this->http_c($endpoint, "post", $payload);
