@@ -119,8 +119,10 @@ class Notion {
 
         // execute curl session
         $result = curl_exec($curl);
-        if(!$result){ $this->throwE('Connection error'); }
+        $response = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         curl_close($curl);
+        if(!$result)         { $this->throwE('Connection error'); }
+        if($response != 200) { $this->throwE("HTTP Response {$response} was received.") }
         if($convertJSON) $result = json_decode($result);
         return $result;
     }
