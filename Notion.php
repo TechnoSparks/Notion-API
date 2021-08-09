@@ -26,8 +26,14 @@ class Notion {
         $endpoint = "databases/$id/query";
 
         // some parameters must be an array
-        if(!empty($filter) && !is_array($filter)) throw new \Exception('get_rows: argument for `filter` must be an array');
-        if(!empty($sorts)  && !is_array($sorts))  throw new \Exception('get_rows: argument for `sorts` must be an array');
+        if(!empty($filter) && !is_array($filter)) throw new \Exception('get_pages: argument for `filter` must be an array');
+        if(!empty($sorts)  && !is_array($sorts))  throw new \Exception('get_pages: argument for `sorts` must be an array');
+
+        // num_pages must be int
+        if(is_numeric($num_pages)) {
+            $num_pages = intval($num_pages); // de-string
+        }
+        else throw new \Exception('get_pages: argument for `num_pages` must be an int');
 
         // # LOGIC ====================
 
@@ -87,5 +93,9 @@ class Notion {
         curl_close($curl);
         if($convertJSON) $result = json_decode($result);
         return $result;
+    }
+
+    private function throwE($errorText) {
+        throw new \Exception($errorText);
     }
 }
