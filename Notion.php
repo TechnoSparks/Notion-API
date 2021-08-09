@@ -15,12 +15,12 @@ class Notion {
 
     function get_database($id = null) {
         // # CONSTRAINTS ====================
-
         // current_database must be set
         if(empty($id) && empty($this->current_database)) $this->throwE('database id needed');
         $id       = (empty($id)) ? $this->current_database : $id;
         $endpoint = "databases/$id";
 
+        // # LOGIC ====================
         return $this->http_c($endpoint);
     }
 
@@ -34,7 +34,6 @@ class Notion {
         $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
-
         // construct payload array
         $payload = [];
         if(!empty($start_cursor)) $payload[] = $start_cursor;
@@ -46,7 +45,6 @@ class Notion {
 
     function get_pages($id = null, $filter = null, $sorts = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
-
         // current_database must be set
         if(empty($id) && empty($this->current_database)) $this->throwE('database id needed');
         $id       = (empty($id)) ? $this->current_database : $id;
@@ -62,7 +60,6 @@ class Notion {
         $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
-
         // construct payload array
         $payload = [];
         if(!empty($filter))       $payload[] = $filter;
@@ -76,7 +73,6 @@ class Notion {
 
     function get_block_children($id = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
-
         // num_items must be int
         if(is_numeric($num_items)) $num_items = intval($num_items); // de-string
             else $this->throwE('get_pages: argument for `num_items` must be an int');
@@ -87,7 +83,6 @@ class Notion {
 
     private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
         // # CONSTRAINTS ====================
-
         // sanisation for HTTP method
         $method = strtolower($method);
 
@@ -98,7 +93,6 @@ class Notion {
         if(!empty($payload)  && !is_array($payload)) $this->throwE('http_c: argument for `payload` must be an array');
 
         // # LOGIC ====================
-
         if(!empty($payload) && $convertJSON) $payload = json_encode($payload);
         $url  = $this->NOTION_API.$endpoint;
         $curl = curl_init();
