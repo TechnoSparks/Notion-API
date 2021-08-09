@@ -111,6 +111,6 @@ class Notion {
     }
 
     private function throwE($errorText) {
-        throw new \Exception($errorText);
+        if(!empty($errorText)) throw new \Exception($errorText);
     }
 }
