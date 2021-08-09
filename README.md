@@ -2,7 +2,9 @@
 My implementation of Notion API in PHP with no dependencies
 
 ## Installation & Use
-git clone or download Notion.php then
+**Requires PHP 8**
+
+Download Notion.php frozen as per to tag in Releases section, then simply
 ```require_once path/to/dir/Notion.php```
 
 ## Note
