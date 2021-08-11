@@ -73,9 +73,12 @@ class Notion {
 
     function get_block_children($id = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
+        // id is a must
+        if(empty($id)) this->throwE("get_block_children: an ID is required");
+
         // num_items must be int
         if(is_numeric($num_items)) $num_items = intval($num_items); // de-string
-            else $this->throwE('get_pages: argument for `num_items` must be an int');
+            else $this->throwE('get_block_children: argument for `num_items` must be an int');
         $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
