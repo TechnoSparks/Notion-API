@@ -74,7 +74,7 @@ class Notion {
     function get_block($id = null) {
         // # CONSTRAINTS ====================
         // id is a must
-        if(empty($id)) $this->throwE("get_block_children: an ID is required");
+        if(empty($id)) $this->throwE("get_block: an ID is required");
         $endpoint = "blocks/$id";
 
         // # LOGIC ====================
