@@ -74,7 +74,8 @@ class Notion {
     function get_block_children($id = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
         // id is a must
-        if(empty($id)) this->throwE("get_block_children: an ID is required");
+        if(empty($id)) $this->throwE("get_block_children: an ID is required");
+        $endpoint = "blocks/$id/children";
 
         // num_items must be int
         if(is_numeric($num_items)) $num_items = intval($num_items); // de-string
@@ -82,6 +83,12 @@ class Notion {
         $num_items = ($num_items <= 0 && $num_items > 100) ? 100 : $num_items; // <= will turn it to default 100
 
         // # LOGIC ====================
+        // adjust endpoint to include params
+        $endpoint .= "?page_size=".$num_items;
+        if(!empty($start_cursor)) $endpoint .= "&start_cursor=".$start_cursor;
+
+        // commit
+        return $this->http_c($endpoint);
     }
 
     private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
