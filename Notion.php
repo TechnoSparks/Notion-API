@@ -4,7 +4,7 @@ class Notion {
     private $api_key = null; // holds the API key
     var $current_database = null; // stores the ID of database if set
     const NOTION_API = "https://api.notion.com/v1/";
-    const NOTION_VER = "2021-05-13";
+    const NOTION_VER = "2021-08-16";
 
     function __construct($api_key = null, $database = null) {
         // a token is required
