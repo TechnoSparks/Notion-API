@@ -81,7 +81,7 @@ class Notion {
         return $this->http_c($endpoint);
     }
 
-    function get_block_children($id = null, $start_cursor = null, $num_items = 100) {
+    function get_block_children($id = null, $start_cursor = null, $num_items = 100, $json = false) {
         // # CONSTRAINTS ====================
         // id is a must
         if(empty($id)) $this->throwE("get_block_children: an ID is required");
@@ -101,7 +101,7 @@ class Notion {
         return $this->http_c($endpoint);
     }
 
-    private function http_c($endpoint = null, $method = "get", $payload = null, $convertJSON = true) {
+    private function http_c($endpoint = null, $method = "get", $payload = null, $json = false) {
         // # CONSTRAINTS ====================
         // sanisation for HTTP method
         $method = strtolower($method);
@@ -113,7 +113,7 @@ class Notion {
         if(!empty($payload)  && !is_array($payload)) $this->throwE('http_c: argument for `payload` must be an array');
 
         // # LOGIC ====================
-        if(!empty($payload) && $convertJSON) $payload = json_encode($payload);
+        if(!empty($payload)) $payload = json_encode($payload);
         $url  = $this->NOTION_API.$endpoint;
         $curl = curl_init();
         if($method == "post"){
@@ -137,7 +137,7 @@ class Notion {
         curl_close($curl);
         if(!$result)         { $this->throwE('Connection error'); }
         if($response != 200) { $this->throwE("HTTP Response {$response} was received."); }
-        if($convertJSON) $result = json_decode($result);
+        if(!$json) $result = json_decode($result);
         return $result;
     }
 
