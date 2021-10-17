@@ -81,7 +81,7 @@ class Notion {
         return $this->http_c($endpoint);
     }
 
-    function get_block_children($id = null, $start_cursor = null, $num_items = 100, $json = false) {
+    function get_block_children($id = null, $start_cursor = null, $num_items = 100) {
         // # CONSTRAINTS ====================
         // id is a must
         if(empty($id)) $this->throwE("get_block_children: an ID is required");
